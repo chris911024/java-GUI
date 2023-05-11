@@ -4,10 +4,8 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.net.PortUnreachableException;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
 import java.util.InputMismatchException;
 
 public class Client {
@@ -127,10 +125,11 @@ class ClientPanel extends JPanel implements ActionListener{
     }
 
     public void SendLogs(String s){
-    
+        ta3.setText(ta3.getText() + "\n" + "我:" + s);
     }
     public void AcceptMessage(String s){
-
+        String S =s.replace("\\n","\n");
+        InserMessage(false,S);
     }
     public void sendMessage(){
         String str = ta2.getText().replace("\n","\\n");
@@ -139,7 +138,12 @@ class ClientPanel extends JPanel implements ActionListener{
         ta2.setText("");
     }
     public void InserMessage(boolean IsMe,String s){
-
+        if(!IsMe){
+            ta1.setText(ta1.getText() + "\n" + "對方" + s);
+        }
+        else{
+            ta1.setText(ta1.getText() + "\n" + "我:" + s);
+        }
     }
 class Connection{
     Socket sk;
@@ -273,10 +277,4 @@ class AcceptThread extends Thread{
         }
     }
 }
-
-
-
-
-    
-    
 }
